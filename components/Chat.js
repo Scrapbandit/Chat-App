@@ -10,6 +10,8 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 
+
+
 export default class Chat extends React.Component {
   constructor() {
     super();
@@ -61,12 +63,11 @@ export default class Chat extends React.Component {
   }
 
   render() {
-    let name = this.props.route.params.name;
-    this.props.navigation.setOptions({ title: name });
+    // let name = this.props.route.params.name;
+    // this.props.navigation.setOptions({ title: name });
 
     return (
-      <view style={[{ backgroundColor: color }, styles.container]}
-      >
+       <view>
         <GiftedChat
           renderBubble={this.renderBubble.bind(this)}
           messages={this.state.messages}
