@@ -4,7 +4,7 @@ import { GiftedChat, Bubble, InputToolbar } from "react-native-gifted-chat";
 import NetInfo from "@react-native-community/netinfo";
 import MapView from "react-native-maps";
 // import AsyncStorage from '@react-native-async-storage/async-storage';
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import CustomActions from "./CustomActions";
 
 import { View, Platform, KeyboardAvoidingView } from "react-native";
@@ -32,12 +32,13 @@ export default class Chat extends React.Component {
 
     //setting up the firebase
     const firebaseConfig = {
-      apiKey: "AIzaSyCYhM7ZWoVZLLUD5xzpcepyID3B5w1sfuE",
-      authDomain: "test-8b82a.firebaseapp.com",
-      databaseURL: "https://test-8b82a.firebaseio.com",
-      projectId: "test-8b82a",
-      storageBucket: "test-8b82a.appspot.com",
-      messagingSenderId: "202131758796",
+      apiKey: "AIzaSyDCPGA5a54SYFgF3WS0WC0jRhycpGdcBT0",
+      authDomain: "test-99010.firebaseapp.com",
+      projectId: "test-99010",
+      storageBucket: "test-99010.appspot.com",
+      messagingSenderId: "587519131677",
+      appId: "1:587519131677:web:516c76cdb4d5268299c6f4",
+      measurementId: "G-F00Q1T1KSK",
     };
 
     if (!firebase.apps.length) {
@@ -214,7 +215,7 @@ export default class Chat extends React.Component {
           renderBubble={this.renderBubble.bind(this)}
           renderInputToolbar={this.renderInputToolbar.bind(this)}
           messages={this.state.messages}
-          renderActions={renderCustomActions}
+          renderActions={this.renderCustomActions}
           onSend={(messages) => this.onSend(messages)}
           user={{ _id: this.state.user._id, name: this.state.user.name }}
         />
