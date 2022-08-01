@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import { GiftedChat, Bubble, InputToolbar } from "react-native-gifted-chat";
-//import package to determine if user is online or not
-import NetInfo from "@react-native-community/netinfo";
+import NetInfo from "@react-native-community/netinfo";//import package to determine if user is online or not
 import MapView from "react-native-maps";
-// import AsyncStorage from '@react-native-async-storage/async-storage';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CustomActions from "./CustomActions";
 
@@ -24,12 +22,12 @@ export default class Chat extends React.Component {
         _id: "",
         name: "",
       },
+        image: null,
+        location: null,
+        loggedInText: 'Waiting...'
     };
 
-    const renderCustomActions = (props) => {
-      return <CustomActions {...props} />;
-    };
-
+    
     //setting up the firebase
     const firebaseConfig = {
       apiKey: "AIzaSyDCPGA5a54SYFgF3WS0WC0jRhycpGdcBT0",
@@ -198,6 +196,12 @@ export default class Chat extends React.Component {
       />
     );
   }
+
+   renderCustomActions = (props) => {
+    return <CustomActions {...props} />;
+  };
+
+
   renderInputToolbar(props) {
     if (this.state.isConnected == false) {
     } else {
@@ -208,9 +212,10 @@ export default class Chat extends React.Component {
   render() {
     let color = this.props.route.params.color;
     // Set default background color if no color was selected
+    const { backgroundColor } = this.props.route.params;
 
     return (
-      <View style={[{ backgroundColor: color }, { flex: 1 }]}>
+      <View style={[{ backgroundColor: backgroundColor }, { flex: 1 }]}>
         <GiftedChat
           renderBubble={this.renderBubble.bind(this)}
           renderInputToolbar={this.renderInputToolbar.bind(this)}
