@@ -15,11 +15,16 @@ import {
   Alert,
   ScrollView,
 } from "react-native";
+import CustomActions from './components/CustomActions';
 
 // const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <NavigationContainer>
