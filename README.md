@@ -4,7 +4,9 @@
 To build a chat app for mobile devices using React Native. The app will
 provide users with a chat interface and options to share images and their
 location.
+```
 "A fast and easiest way to connect with your friends with options to share images, pictures and their location."
+```
 
 ### User Stories
 
