@@ -237,6 +237,7 @@ export default class Chat extends React.Component {
   }
 
   render() {
+    let name = this.props.route.params.name;
     let bgColor = this.props.route.params.bgColor;
 
     return (
