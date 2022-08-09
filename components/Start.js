@@ -17,7 +17,7 @@ export default class Start extends React.Component {
     super(props);
     this.state = {
       name: "",
-      bgColor: this.colors,
+      bgColor: this.colors.grey,
     };
   }
 
@@ -29,7 +29,7 @@ export default class Start extends React.Component {
     black: "#090C08",
     purple: "#474056",
     grey: "#8A95A5",
-    green: "B9C6AE",
+    green: "#B9C6AE",
     blue: "#1B70A0",
   };
 
