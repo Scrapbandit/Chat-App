@@ -39,75 +39,49 @@ export default class CustomActions extends React.Component {
     return await snapshot.ref.getDownloadURL();
   }
 
-  //to select an existing picture
+  //user picks image from image library
+  pickImage = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status === 'granted') {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images, //images only
+      }).catch(error => console.log(error));
 
-  imagePicker = async () => {
-    const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
+      if (!result.cancelled) {
+        const imageUrl = await this.imageUpload(result.uri)
+        this.props.onSend({ image: imageUrl })
+      };
+    }
+  }
 
-    try {
-      if (status === 'granted') {
-        let result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        }).catch(error => console.log(error));
 
-        if (!result.cancelled) {
-          const imageUrl = await this.imageUpload(result.uri);
-          this.props.onSend({ image: imageUrl });
-        }
+  takePhoto = async () => {
+    const { status } = await ImagePicker.requestCameraPermissionsAsync();
+    if (status === 'granted') {
+      let result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      }).catch(error => console.log(error));
+
+      if (!result.cancelled) {
+        const imageUrl = await this.imageUpload(result.uri);
+        this.props.onSend({ image: imageUrl })
       }
-    } catch (error) {
-      console.error(error);
     }
   }
   //to get user location
 
   getLocation = async () => {
-    const { status } = await Permissions.askAsync(Permissions.LOCATION_FOREGROUND);
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if (status === 'granted') {
+      let result = await Location.getCurrentPositionAsync({});
 
-    try {
-      if (status === 'granted') {
-        let result = await Location.getCurrentPositionAsync({}).catch(error => console.log(error));
-
-
-        if (result) {
-          console.log(result);
-          this.props.onSend({
-            location: {
-              longitude: result.coords.longitude,
-              latitude: result.coords.latitude,
-            },
-          });
-        }
+      if (result) {
+        this.props.locationFn(result)
+        return result
       }
-    } catch (error) {
-      console.error(error);
     }
+    return null
   }
-
-  //to take a picture
-
-  takePhoto = async () => {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA, Permissions.MEDIA_LIBRARY);
-
-    try {
-      if (status === 'granted') {
-        let result = await ImagePicker.launchCameraAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        }).catch(error => console.log(error));
-
-        if (!result.cancelled) {
-           
-          const imageUrl = await this.imageUpload(result.uri);
-          this.props.onSend({ image: imageUrl });
-          
-        }
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-
 
     onActionPress = () => {
         const options = ['Choose From Library', 'Take Picture', ' Send Location', 'Cancel'];
@@ -121,7 +95,7 @@ export default class CustomActions extends React.Component {
                 switch (buttonIndex) {
                     case 0:
                         console.log('pick an image');
-                        return this.imagePicker();;
+                        return this.pickImage();;
                     case 1:
                         console.log('take picture');
                         return this.takePhoto();;
@@ -135,14 +109,17 @@ export default class CustomActions extends React.Component {
 
     render() {
         return (
-            <TouchableOpacity 
-            
-             style={styles.container} 
-             onPress={this.onActionPress} >
-             <View style={[styles.wrapper, this.props.wrapperStyle]}>
-                <Text style={[styles.iconText, this.props.iconTextStyle]}>+</Text>
-                </View>
-            </TouchableOpacity>
+          <TouchableOpacity
+          accessible={true}
+          accessibilityLabel='More options'
+          accessibilityHint='Options to send an image, take photo, or send location'
+          style={{ width: 26, height: 26, marginLeft: 10, marginBottom: 10 }}
+          onPress={this.onActionPress}
+        >
+          <View style={[styles.wrapper, this.props.wrapperStyle]}>
+            <Text style={[styles.iconText, this.props.iconTextStyle]}>+</Text>
+          </View>
+        </TouchableOpacity>
         )
     }
 
