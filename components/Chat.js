@@ -4,7 +4,7 @@ import NetInfo from "@react-native-community/netinfo"; //import package to deter
 import MapView from "react-native-maps";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CustomActions from "./CustomActions";
-
+import uuid from 'react-native-uuid'
 import { View, Platform, KeyboardAvoidingView } from "react-native";
 
 // const firebase = require('firebase');
